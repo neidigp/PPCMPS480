@@ -1,0 +1,12 @@
+<!-- JS function to delete a thread, leaving it empty, after a check has been made if the user is an admin -->
+
+function deleteThread(username, postId)
+{
+  if (username.admin = "true"){
+    postId.content = "";
+  }
+  else {
+    window.alert("You need to be an admin to delete posts");
+  }
+}
+
