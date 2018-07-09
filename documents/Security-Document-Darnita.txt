@@ -1,0 +1,7 @@
+Security Document:
+
+1. Data encryption is one way to make sure the system is secure and safe. Another option is using a cloud service because then the liability is more on the 3rd party. Our scope is limited so we would not be able to use a cloud service.
+
+2. Information that is sensitive is normally informaiton that is personally identifiable. This can range from biometric data to social security numbers.  The standards are different in each country. For instance, the New GDPR policy has stricter standards than most countries have; however, that would be out of our scope for this project. 
+
+3. We can begin to protect hour data by using HTTPS which is easily implemented. 
