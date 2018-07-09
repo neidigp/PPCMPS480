@@ -1,0 +1,10 @@
+public function store(Request $request)
+{
+    [...]
+    
+    $user = User::findOrFail($request->get('id_user'));
+    
+    MessageBoard::createPost($user, Auth::user(), null, $text);
+
+    [...]                
+}
