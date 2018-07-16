@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Message Board</title>
+<script src="jquery-3.3.1.min.js"></script>
+<script>
+ $(function() {
+   //console.log("jquery loaded!");
+
+   function showMessages() {
+     $("#messages").empty();
+     $("#messages").append("Loading data ...");
+     $.ajax({
+       type: "GET",
+       url: "messages",
+       success: function(json) {
+         //console.log(JSON.stringify(json));
+         if (!json.success) {
+           alert(json.message);
+         }
+         else {
+           $("#messages").empty();
+           var rows = json.data;
+           for (var i = 0; i < rows.length; i++) {
+             $("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
+           }
+         }
+       },
+       error: function (textStatus, errorThrown) {
+         alert("Request failed!");
+       }
+     });
+   }
+   showMessages();
+   
+   $("#new_message_button").click(function() {
+     var title = $("#new_message_title").val();
+     var text = $("#new_message_text").val();
+     $.ajax({
+       type: "POST",
+       url: "add_message",
+       data: JSON.stringify({
+         title: title,
+         text: text
+       }),
+       success: function(json) {
+         //console.log(JSON.stringify(json));
+         if (!json.success) {
+           alert(json.message);
+         }
+         else {
+           $("#new_message_title").val("");
+           $("#new_message_text").val("");
+           showMessages();
+         }
+       },
+       error: function (textStatus, errorThrown) {
+         alert("Request failed!");
+       }
+     });
+   });
+ });
+</script>
+</head>
+<body>
+  This is the homepage for the Message Board!<br><br>
+  Title: <input type="text" id="new_message_title"></input><br>
+  Text: <input type="text" id="new_message_text"></input><br>
+  <button id="new_message_button">Submit</button><br><br>
+  <div id="messages"></div>
+</body>
+</html>
