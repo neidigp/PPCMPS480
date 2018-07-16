@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home_Page</title>
+
+    <!-- Jquery -->
+    <script src="scripts/jquery-3.3.1.min.js" > </script>
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+<body style="background-color:lightgrey;">
+  <h1>MsgBrd Name Placeholder</h1>
+
+  <div class="topnav">
+    <a href="loginpage.html">Login/Signup</a>
+    <a href="site_news.html">Site News</a>
+    <a href="forum.html">Forum</a>
+    <a href="about.html">About</a>
+  </div>
+
+<script>
+<!-- using DOM to delete a row in the current messege table, this will be used in conjunction with a button click -->
+function deleteMessege(currentTable, PostId){
+  document.getElementById(currentTable).deleteRow(PostId);
+}
+
+</script>
+
+</body>
+
+</html>
