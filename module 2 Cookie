@@ -1,0 +1,8 @@
+<!-- This will be included in the login function
+ Creates a cookie to track if the user is logged in
+ will be used for checking to see if they will be able to post to the message board
+
+ /login  -->
+{
+  document.cookie = "Active";  <!-- Creates a cookie with a value of active so we can check if that person has logged in... cookie will expire on page close -->
+}
