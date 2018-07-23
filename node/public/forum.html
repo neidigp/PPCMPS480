@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Forum</title>
 
     <!-- Jquery -->
@@ -19,21 +20,22 @@
   </div>
 
   <div class="Table">
-    <table id="Forum_Table" text-align:"left" style="width: 100%">
-      <th>Message Board</th>
-      <tr>This should show up tho...</th>
+    <table id="Forum_Table" text-align:"left" style="width: 100%" border="1|0">
+      <th>Message Board</th><br>
+      <td>Missing info...</td><br>
       <br>
     </table>
 
   </div>
 
-</body>
+
 <script>
- $(function() {
+$(function() {
    //console.log("jquery loaded!");
 
    function showMessages() {
-     $("#Forum_Table").append("Loading data ...");
+     $("#messages").empty();
+     $("#messages").append("Loading data ...");
      $.ajax({
        type: "GET",
        url: "messages",
@@ -43,9 +45,10 @@
            alert(json.message);
          }
          else {
+           $("#messages").empty();
            var rows = json.data;
            for (var i = 0; i < rows.length; i++) {
-             $("#Forum_Table").append("<th>" + rows[i].MessageID + " " + rows[i].Title + "</th><br>" + "<tr>" +rows[i].Text + "</tr><br>");
+             $("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
            }
          }
        },
@@ -84,6 +87,13 @@
    });
  });
 </script>
-
+</head>
+<body>
+  This is the homepage for the Message Board!<br><br>
+  Title: <input type="text" id="new_message_title"></input><br>
+  Text: <input type="text" id="new_message_text"></input><br>
+  <button id="new_message_button">Submit</button><br><br>
+  <div id="messages"></div>
+</body>
 
 </html>
