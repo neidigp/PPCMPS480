@@ -5,7 +5,7 @@
     <title>Forum</title>
 
     <!-- Jquery -->
-    <script src="scripts/jquery-3.3.1.min.js" > </script>
+    <script src="jquery-3.3.1.min.js" > </script>
     <link rel="stylesheet" href="styles.css">
 
   </head>
@@ -20,13 +20,21 @@
   </div>
 
   <div class="Table">
-    <table id="Forum_Table" text-align:"left" style="width: 100%" border="1|0">
-      <th>Message Board</th><br>
-      <td>Missing info...</td><br>
-      <br>
+    <h2 text-align="center">Message Board</h2>
+    <table id="Forum_Table" text-align:"left" style="width: 100%" border="1|0" align="center">
     </table>
 
   </div>
+  <div align="center">
+  <input type="textarea" rows="6" cols="100" id="new_message_title" align="center"></input><br>
+  Title </br>
+  <input type="textarea" rows="10" cols="100" id="new_message_text"></input><br>
+  Post Body</br>
+  <button id="new_message_button" align="center">Submit</button><br><br>
+  <button id="deleteLp" align="center">Delete Post</button><br>
+
+
+</body>
 
 
 <script>
@@ -34,8 +42,9 @@ $(function() {
    //console.log("jquery loaded!");
 
    function showMessages() {
-     $("#messages").empty();
-     $("#messages").append("Loading data ...");
+     //$("#messages").empty();
+     $("#Forum_Table").empty();
+     //$("#messages").append("Loading data ...");
      $.ajax({
        type: "GET",
        url: "messages",
@@ -45,10 +54,12 @@ $(function() {
            alert(json.message);
          }
          else {
-           $("#messages").empty();
+           //$("#messages").empty();
+           $("#Forum_Table").empty();
            var rows = json.data;
            for (var i = 0; i < rows.length; i++) {
-             $("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
+             //$("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
+             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td></tr>");
            }
          }
        },
@@ -59,6 +70,15 @@ $(function() {
    }
    showMessages();
 
+   //implementing delete last post function
+  // $("#deleteLP").click(function(){
+     //$ajax({
+       //type: "GET",
+      // url: "deleteLP",)
+
+
+    // }
+  // });
    $("#new_message_button").click(function() {
      var title = $("#new_message_title").val();
      var text = $("#new_message_text").val();
@@ -88,12 +108,12 @@ $(function() {
  });
 </script>
 </head>
-<body>
-  This is the homepage for the Message Board!<br><br>
+<!--<body>
+  //This is the homepage for the Message Board!<br><br>
   Title: <input type="text" id="new_message_title"></input><br>
   Text: <input type="text" id="new_message_text"></input><br>
   <button id="new_message_button">Submit</button><br><br>
   <div id="messages"></div>
-</body>
+</body> -->
 
 </html>
