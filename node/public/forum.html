@@ -31,7 +31,7 @@
   <input type="textarea" rows="10" cols="100" id="new_message_text"></input><br>
   Post Body</br>
   <button id="new_message_button" align="center">Submit</button><br><br>
-  <button id="deleteLp" align="center">Delete Post</button><br>
+  <button id="deleteLP" align="center">Delete Last Post</button><br>
 
 
 </body>
@@ -59,7 +59,7 @@ $(function() {
            var rows = json.data;
            for (var i = 0; i < rows.length; i++) {
              //$("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
-             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td></tr>");
+             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "</tr>");
            }
          }
        },
@@ -71,14 +71,14 @@ $(function() {
    showMessages();
 
    //implementing delete last post function
-  // $("#deleteLP").click(function(){
-     //$ajax({
-       //type: "GET",
-      // url: "deleteLP",)
+   $("#deleteLP").click(function(){
+     $ajax({
+       type: "DELETE",
+       url: "deleteLP",
 
+    });
+   });
 
-    // }
-  // });
    $("#new_message_button").click(function() {
      var title = $("#new_message_title").val();
      var text = $("#new_message_text").val();
