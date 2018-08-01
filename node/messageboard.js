@@ -154,11 +154,25 @@ conn.connect(function(err) {
     return;
   }
 
-  var sql = "Delete FROM MESSAGE WHERE MessageID = (SELECT Max(MessageID) FROM MESSAGE)";
+  var sql = "Delete FROM MESSAGE ORDER BY MessageID DESC LIMIT 1";
   con.query(sql,function(err) {
-    if(err) throw err;
+    var outjson = {};
+    if (err) {
+      // query failed
+      outjson.success = false;
+      outjson.message = "Query failed: " + err;
+    }
+    else {
+      // query successful
+      outjson.success = true;
+      outjson.message = "Query successful!";
+    }
+    // return json object that contains the result of the query
+    sendResponse(req, res, outjson);
+
     console.log("Record deleted");
   });
+
   // query the database
   //conn.query("DELETE * FROM MESSAGE WHERE MessageID = (Select Max(MessageID) FROM MESSAGE) ", function(err, rows, fields) {
     // build json result object

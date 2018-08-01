@@ -17,6 +17,7 @@
     <a href="site_news.html">Site News</a>
     <a href="forum.html">Forum</a>
     <a href="about.html">About</a>
+    <a href="analytics.html">Business Analytics</a>
   </div>
 
   <div class="Table">
@@ -71,13 +72,20 @@ $(function() {
    showMessages();
 
    //implementing delete last post function
-   $("#deleteLP").click(function(){
+   $("#deleteLP").click(function() {
      $ajax({
        type: "DELETE",
        url: "deleteLP",
+       success: function(json) {
+         console.log(JSON.stringify(json));
+       },
+       error: function (textStatus, errorThrown) {
+        alert("Request failed!");
+      }
+        });
 
     });
-   });
+
 
    $("#new_message_button").click(function() {
      var title = $("#new_message_title").val();
@@ -106,6 +114,7 @@ $(function() {
      });
    });
  });
+
 </script>
 </head>
 <!--<body>
