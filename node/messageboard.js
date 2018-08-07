@@ -14,7 +14,7 @@ http.createServer(function(req, res) {
       addMessage(req, res);
     }
     else if (path === "/deleteLP"){
-      deleteLP(req, res);
+      deletePost(req, res);
     }
     else {
       serveStaticFile(res, path);
@@ -145,7 +145,16 @@ function addMessage(req, res) {
 }
 
 //deletes the last post made
-function deleteLP(req, res) {
+function deletePost(req, res) {
+  var id = "";
+  req.on("data", function (data) {
+    id += data;
+    // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+    if (id.length > 1e6) {
+      // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
+      req.connection.destroy();
+    }
+  });
 var conn = mysql.createConnection(credentials.connection);
 // connect to database
 conn.connect(function(err) {
@@ -154,7 +163,7 @@ conn.connect(function(err) {
     return;
   }
 
-  var sql = "Delete FROM MESSAGE ORDER BY MessageID DESC LIMIT 1";
+  var sql = "DELETE FROM MESSAGE WHERE MessageID = " + id;
   con.query(sql,function(err) {
     var outjson = {};
     if (err) {

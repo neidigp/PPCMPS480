@@ -39,6 +39,9 @@
 
 
 <script>
+//function delete(id){
+  //alert(id);
+//}
 $(function() {
    //console.log("jquery loaded!");
 
@@ -60,7 +63,7 @@ $(function() {
            var rows = json.data;
            for (var i = 0; i < rows.length; i++) {
              //$("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
-             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "</tr>");
+             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "<td>" + "<button id='delete' value='rows[i].MessageID' onclick='delete(this.value);' >Delete Post</button>" + "</td>" + "</tr>");
            }
          }
        },
@@ -70,6 +73,17 @@ $(function() {
      });
    }
    showMessages();
+
+  /* function delete(id){
+     $ajax({
+       type: "POST"
+       url: "deleteLP",
+       data: id,
+       success: function(data){
+         // show successful delete
+       }
+     });
+   } */
 
    //implementing delete last post function
    $("#deleteLP").click(function() {
