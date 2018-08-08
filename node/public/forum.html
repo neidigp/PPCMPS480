@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Forum</title>
+
+    <!-- Jquery -->
+    <script src="jquery-3.3.1.min.js" > </script>
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+<body style="background-color:lightgrey;">
+  <h1>Message Board Alpha</h1>
+
+  <div class="topnav">
+    <a href="loginpage.html">Login/Signup</a>
+    <a href="site_news.html">Site News</a>
+    <a href="forum.html">Forum</a>
+    <a href="about.html">About</a>
+    <a href="analytics.html">Business Analytics</a>
+  </div>
+
+  <div class="Table">
+    <h2 text-align="center">Message Board</h2>
+    <table id="Forum_Table" text-align:"left" style="width: 100%" border="1|0" align="center">
+    </table>
+
+  </div>
+  <div align="center">
+  <input type="textarea" rows="6" cols="100" id="new_message_title" align="center"></input><br>
+  Title </br>
+  <input type="textarea" rows="10" cols="100" id="new_message_text"></input><br>
+  Post Body<br>
+  <button id="new_message_button" align="center">Submit</button><br><br>
+  <button id="deleteLP" align="center">Delete Last Post</button><br>
+
+
+</body>
+
+
+<script>
+//function delete(id){
+  //alert(id);
+//}
+$(function() {
+   //console.log("jquery loaded!");
+
+   function showMessages() {
+     //$("#messages").empty();
+     $("#Forum_Table").empty();
+     //$("#messages").append("Loading data ...");
+     $.ajax({
+       type: "GET",
+       url: "messages",
+       success: function(json) {
+         //console.log(JSON.stringify(json));
+         if (!json.success) {
+           alert(json.message);
+         }
+         else {
+           //$("#messages").empty();
+           $("#Forum_Table").empty();
+           var rows = json.data;
+           for (var i = 0; i < rows.length; i++) {
+             //$("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
+             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "<td>" + "<button id='delete' value='rows[i].MessageID' onclick='delete(this.value);' >Delete Post</button>" + "</td>" + "</tr>");
+           }
+         }
+       },
+       error: function (textStatus, errorThrown) {
+         alert("Request failed!");
+       }
+     });
+   }
+   showMessages();
+
+
+/*
+   //implementing delete last post function
+   $("#deleteLP").click(function() {
+     $.ajax({
+       type: "DELETE",
+       url: "deleteLP",
+       success: function(json) {
+         console.log(JSON.stringify(json));
+       },
+       error: function (textStatus, errorThrown) {
+        alert("Request failed!");
+      }
+        });
+*/
+    });
+
+    function delete(id){
+      $.ajax({
+        type: "POST"
+        url: "deleteLP",
+        data: id,
+        success: function(data){
+          // show successful delete
+          showMessages();
+        }
+      });
+    }
+
+
+   $("#new_message_button").click(function() {
+     var title = $("#new_message_title").val();
+     var text = $("#new_message_text").val();
+     $.ajax({
+       type: "POST",
+       url: "add_message",
+       data: JSON.stringify({
+         title: title,
+         text: text
+       }),
+       success: function(json) {
+         //console.log(JSON.stringify(json));
+         if (!json.success) {
+           alert(json.message);
+         }
+         else {
+           $("#new_message_title").val("");
+           $("#new_message_text").val("");
+           showMessages();
+         }
+       },
+       error: function (textStatus, errorThrown) {
+         alert("Request failed!");
+       }
+     });
+   });
+ });
+
+</script>
+<!--<body>
+  //This is the homepage for the Message Board!<br><br>
+  Title: <input type="text" id="new_message_title"></input><br>
+  Text: <input type="text" id="new_message_text"></input><br>
+  <button id="new_message_button">Submit</button><br><br>
+  <div id="messages"></div>
+</body> -->
+
+</html>

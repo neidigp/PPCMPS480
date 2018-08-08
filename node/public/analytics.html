@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Forum</title>
+
+    <!-- Jquery -->
+    <script src="jquery-3.3.1.min.js" > </script>
+    <link rel="stylesheet" href="styles.css">
+
+  </head>
+<body style="background-color:lightgrey;">
+  <h1>Message Board Alpha</h1>
+
+  <div class="topnav">
+    <a href="loginpage.html">Login/Signup</a>
+    <a href="site_news.html">Site News</a>
+    <a href="forum.html">Forum</a>
+    <a href="about.html">About</a>
+    <a href="analytics.html">Business Analytics</a>
+  </div>
+
+  <div id="PostNum"></div>
+
+
+
+
+</body>
+
+
+<script>
+$(function() {
+   console.log("jquery loaded!");
+
+   function showPostNum(){
+     $("#PostNum").empty();
+     $("#PostNum").append("Loading data ...");
+     $.ajax({
+       type: "GET",
+       url: "messages",
+       success: function(json) {
+         console.log(JSON.stringify(json));
+         if (!json.success) {
+           alert(json.message);
+         }
+         else {
+           //$("#messages").empty();
+           $("#PostNum").empty();
+           var rows = json.data;
+           var postnum = 0;
+           for (var i = 0; i < rows.length; i++) {
+             //$("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
+             postnum = rows[i].MessageID;
+             //$("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "</tr>");
+             $("#PostNum").append(postnum);
+           }
+         }
+       },
+       error: function (textStatus, errorThrown) {
+         alert("Request failed!");
+       }
+     });
+   }
+
+ });
+</script>
+
+
+</html>

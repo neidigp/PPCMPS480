@@ -13,9 +13,6 @@ http.createServer(function(req, res) {
     else if (path === "/add_message") {
       addMessage(req, res);
     }
-    else if (path === "/deleteLP"){
-      deletePost(req, res);
-    }
     else {
       serveStaticFile(res, path);
     }
@@ -33,7 +30,7 @@ http.createServer(function(req, res) {
 }).listen(3000);
 
 function serveStaticFile(res, path, contentType, responseCode) {
-  if (!path) path = "/forum.html";
+  if (!path) path = "/index.html";
   if (!responseCode) responseCode = 200;
   if (!contentType) {
     contentType = "application/octet-stream";
@@ -143,65 +140,5 @@ function addMessage(req, res) {
     });
   });
 }
-
-//deletes the last post made
-function deletePost(req, res) {
-  var id = "";
-  req.on("data", function (data) {
-    id += data;
-    // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
-    if (id.length > 1e6) {
-      // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
-      req.connection.destroy();
-    }
-  });
-var conn = mysql.createConnection(credentials.connection);
-// connect to database
-conn.connect(function(err) {
-  if (err) {
-    console.error("ERROR: cannot connect: " + err);
-    return;
-  }
-
-  var sql = "DELETE FROM MESSAGE WHERE MessageID = " + id;
-  con.query(sql,function(err) {
-    var outjson = {};
-    if (err) {
-      // query failed
-      outjson.success = false;
-      outjson.message = "Query failed: " + err;
-    }
-    else {
-      // query successful
-      outjson.success = true;
-      outjson.message = "Query successful!";
-    }
-    // return json object that contains the result of the query
-    sendResponse(req, res, outjson);
-
-    console.log("Record deleted");
-  });
-
-  // query the database
-  //conn.query("DELETE * FROM MESSAGE WHERE MessageID = (Select Max(MessageID) FROM MESSAGE) ", function(err, rows, fields) {
-    // build json result object
-    //var outjson = {};
-    //if (err) {
-      // query failed
-    //  outjson.success = false;
-    //  outjson.message = "Query failed: " + err;
-  //  }
-//    else {
-      // query successful
-//      outjson.success = true;
-//      outjson.message = "Query execution successful!";
-
-    // return json object that contains the result of the query
-//    sendResponse(req, res, outjson);
-  });
-  conn.end();
-};
-
-
 
 console.log("Server started on localhost: 3000; press Ctrl-C to terminate....");

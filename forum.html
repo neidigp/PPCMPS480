@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Home_Page</title>
+    <title>Forum</title>
 
     <!-- Jquery -->
     <script src="scripts/jquery-3.3.1.min.js" > </script>
@@ -9,7 +9,7 @@
 
   </head>
 <body style="background-color:lightgrey;">
-  <h1>MsgBrd Name Placeholder</h1>
+  <h1>Message Board Alpha</h1>
 
   <div class="topnav">
     <a href="loginpage.html">Login/Signup</a>
@@ -18,6 +18,72 @@
     <a href="about.html">About</a>
   </div>
 
+  <div class="Table">
+    <table id="Forum_Table" text-align:"left" style="width: 100%">
+      <th>Message Board</th>
+      <tr>This should show up tho...</th>
+      <br>
+    </table>
+
+  </div>
+
 </body>
+<script>
+ $(function() {
+   //console.log("jquery loaded!");
+
+   function showMessages() {
+     $("#Forum_Table").append("Loading data ...");
+     $.ajax({
+       type: "GET",
+       url: "messages",
+       success: function(json) {
+         //console.log(JSON.stringify(json));
+         if (!json.success) {
+           alert(json.message);
+         }
+         else {
+           var rows = json.data;
+           for (var i = 0; i < rows.length; i++) {
+             $("#Forum_Table").append("<th>" + rows[i].MessageID + " " + rows[i].Title + "</th><br>" + "<tr>" +rows[i].Text + "</tr><br>");
+           }
+         }
+       },
+       error: function (textStatus, errorThrown) {
+         alert("Request failed!");
+       }
+     });
+   }
+   showMessages();
+
+   $("#new_message_button").click(function() {
+     var title = $("#new_message_title").val();
+     var text = $("#new_message_text").val();
+     $.ajax({
+       type: "POST",
+       url: "add_message",
+       data: JSON.stringify({
+         title: title,
+         text: text
+       }),
+       success: function(json) {
+         //console.log(JSON.stringify(json));
+         if (!json.success) {
+           alert(json.message);
+         }
+         else {
+           $("#new_message_title").val("");
+           $("#new_message_text").val("");
+           showMessages();
+         }
+       },
+       error: function (textStatus, errorThrown) {
+         alert("Request failed!");
+       }
+     });
+   });
+ });
+</script>
+
 
 </html>
