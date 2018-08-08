@@ -30,16 +30,16 @@
 
 <script>
 $(function() {
-   //console.log("jquery loaded!");
+   console.log("jquery loaded!");
 
    function showPostNum(){
      $("#PostNum").empty();
-     //$("#messages").append("Loading data ...");
+     $("#PostNum").append("Loading data ...");
      $.ajax({
        type: "GET",
        url: "messages",
        success: function(json) {
-         //console.log(JSON.stringify(json));
+         console.log(JSON.stringify(json));
          if (!json.success) {
            alert(json.message);
          }
@@ -64,7 +64,6 @@ $(function() {
 
  });
 </script>
-</head>
 
 
 </html>

@@ -30,7 +30,7 @@
   <input type="textarea" rows="6" cols="100" id="new_message_title" align="center"></input><br>
   Title </br>
   <input type="textarea" rows="10" cols="100" id="new_message_text"></input><br>
-  Post Body</br>
+  Post Body<br>
   <button id="new_message_button" align="center">Submit</button><br><br>
   <button id="deleteLP" align="center">Delete Last Post</button><br>
 
@@ -74,20 +74,11 @@ $(function() {
    }
    showMessages();
 
-  /* function delete(id){
-     $ajax({
-       type: "POST"
-       url: "deleteLP",
-       data: id,
-       success: function(data){
-         // show successful delete
-       }
-     });
-   } */
 
+/*
    //implementing delete last post function
    $("#deleteLP").click(function() {
-     $ajax({
+     $.ajax({
        type: "DELETE",
        url: "deleteLP",
        success: function(json) {
@@ -97,8 +88,20 @@ $(function() {
         alert("Request failed!");
       }
         });
-
+*/
     });
+
+    function delete(id){
+      $.ajax({
+        type: "POST"
+        url: "deleteLP",
+        data: id,
+        success: function(data){
+          // show successful delete
+          showMessages();
+        }
+      });
+    }
 
 
    $("#new_message_button").click(function() {
@@ -130,7 +133,6 @@ $(function() {
  });
 
 </script>
-</head>
 <!--<body>
   //This is the homepage for the Message Board!<br><br>
   Title: <input type="text" id="new_message_title"></input><br>
