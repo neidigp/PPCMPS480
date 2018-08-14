@@ -33,6 +33,7 @@
   Post Body<br>
   <button id="new_message_button" align="center">Submit</button><br><br>
   <button id="deleteLP" align="center">Delete Last Post</button><br>
+  <div id="postcount" align="right">Total number of posts is:</div>
 
 
 </body>
@@ -61,9 +62,14 @@ $(function() {
            //$("#messages").empty();
            $("#Forum_Table").empty();
            var rows = json.data;
+           var pcount=0;
            for (var i = 0; i < rows.length; i++) {
              //$("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
-             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "<td>" + "<button id='delete' value='rows[i].MessageID' onclick='delete(this.value);' >Delete Post</button>" + "</td>" + "</tr>");
+             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "<td>" + "<button class='delete' id='rows[i].MessageID' >Delete Post</button>" + "</td>" + "</tr>");
+             pcount++;
+             $("#postcount").empty();
+             $("#postcount").append("<p>Total number of posts is: </p>" + pcount);
+
            }
          }
        },
@@ -89,11 +95,13 @@ $(function() {
       }
         });
 */
-    });
 
-    function delete(id){
+
+    $("#delete").click(function() {
+      var id = $(this).attr("id");
+      $("#postcount").append("<p>Id is : </p>" + id);
       $.ajax({
-        type: "POST"
+        type: "POST",
         url: "deleteLP",
         data: id,
         success: function(data){
@@ -101,7 +109,7 @@ $(function() {
           showMessages();
         }
       });
-    }
+    });
 
 
    $("#new_message_button").click(function() {
