@@ -1,73 +1,172 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Message Board</title>
-<script src="jquery-3.3.1.min.js"></script>
-<script>
- $(function() {
-   //console.log("jquery loaded!");
+  <meta charset="utf-8">
+  <title>Message Board</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-   function showMessages() {
-     $("#messages").empty();
-     $("#messages").append("Loading data ...");
-     $.ajax({
-       type: "GET",
-       url: "messages",
-       success: function(json) {
-         //console.log(JSON.stringify(json));
-         if (!json.success) {
-           alert(json.message);
-         }
-         else {
-           $("#messages").empty();
-           var rows = json.data;
-           for (var i = 0; i < rows.length; i++) {
-             $("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
-           }
-         }
-       },
-       error: function (textStatus, errorThrown) {
-         alert("Request failed!");
-       }
-     });
-   }
-   showMessages();
-   
-   $("#new_message_button").click(function() {
-     var title = $("#new_message_title").val();
-     var text = $("#new_message_text").val();
-     $.ajax({
-       type: "POST",
-       url: "add_message",
-       data: JSON.stringify({
-         title: title,
-         text: text
-       }),
-       success: function(json) {
-         //console.log(JSON.stringify(json));
-         if (!json.success) {
-           alert(json.message);
-         }
-         else {
-           $("#new_message_title").val("");
-           $("#new_message_text").val("");
-           showMessages();
-         }
-       },
-       error: function (textStatus, errorThrown) {
-         alert("Request failed!");
-       }
-     });
-   });
- });
-</script>
+  <!-- Custom CSS -->
+  <link href="style.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+  <script src="jquery-3.3.1.min.js"></script>
+
+  <!-- Script for collapsible New Topic Button -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+  $(function() {
+    //console.log("jquery loaded!");
+
+    function showMessages() {
+      $("#messages").empty();
+      $("#messages").append("Loading data ...");
+      $.ajax({
+        type: "GET",
+        url: "messages",
+        success: function(json) {
+          //console.log(JSON.stringify(json));
+          if (!json.success) {
+            alert(json.message);
+          }
+          else {
+            $("#messages").empty();
+            var rows = json.data;
+            for (var i = 0; i < rows.length; i++) {
+              $("#messages").append("<div class='post'><h2> " + rows[i].MessageID + "</h2>" + " <h2><a href='#'>" + rows[i].Title + "</a></h2><br>" + "<p class = " + "wrap>" +  rows[i].Text + "</p><br></div>");
+            }
+          }
+        },
+        error: function (textStatus, errorThrown) {
+          alert("Request failed!");
+        }
+      });
+    }
+    showMessages();
+
+    $("#new_message_button").click(function() {
+      var title = $("#new_message_title").val();
+      var text = $("#new_message_text").val();
+      $.ajax({
+        type: "POST",
+        url: "add_message",
+        data: JSON.stringify({
+          title: title,
+          text: text
+        }),
+        success: function(json) {
+          //console.log(JSON.stringify(json));
+          if (!json.success) {
+            alert(json.message);
+          }
+          else {
+            $("#new_message_title").val("");
+            $("#new_message_text").val("");
+            showMessages();
+          }
+        },
+        error: function (textStatus, errorThrown) {
+          alert("Request failed!");
+        }
+      });
+    });
+  });
+  </script>
 </head>
 <body>
-  This is the homepage for the Message Board!<br><br>
-  Title: <input type="text" id="new_message_title"></input><br>
-  Text: <input type="text" id="new_message_text"></input><br>
-  <button id="new_message_button">Submit</button><br><br>
-  <div id="messages"></div>
+
+  <div class="container-fluid">
+    <div class="navbar-brand">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
+            <div class="wrap">
+              <p>VGRMB</p>
+            </div>
+          </div>
+
+          <!-- <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
+
+          <form action="newtopic.html" method="post" class="form">
+          <button class="btn btn-primary">Start New Topic</button>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</div>
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <a href="#">VGRMB</a> <span class="divider">&gt;</span> <a href="index.html">Main</a>
+      </div>
+    </div>
+  </div>
+  <!-- tOGGLE -->
+  <div class="container">
+    <h2>Video Game Release Message Board</h2>
+    <p>Click on the toggle button to add a topic</p>
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Start New Topic</button>
+    <div id="demo" class="collapse">
+
+      <!-- Start New Topic -->
+      <div class="container box">
+        <form action="#" class="form newtopic" method="post">
+          <div class="topwrap">
+            <div class="posttext pull-left">
+              <div>
+                <input type="text" placeholder="Enter Topic Title" class="form-control "  id="new_message_title" />
+              </div>
+
+              <div>
+                <textarea name="desc" placeholder="Description"  class="form-control"  id="new_message_text"></textarea>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="postinfobot">
+            <div class="pull-right postreply">
+              <div class="pull-left"><button type="submit" id="new_message_button" class="btn btn-primary">Post</button></div>
+              <div class="clearfix"></div>
+            </div>
+
+
+            <div class="clearfix"></div>
+          </div>
+        </form>
+      </div><!-- Start New Topic -->
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-8">
+
+        <!-- 1st POST -->
+        <div id="messages">
+        </div>
+      </div>
+      <!--1st post -->
+    </section>
+  </div>
+</div>
+</div>
+
+
+<!-- <div>
+This is the homepage for the Message Board!<br><br>
+Title: <input type="text" id="new_message_title"></input><br>
+Text: <input type="text" id="new_message_text"></input><br>
+<button id="new_message_button">Submit</button><br><br>
+</div> -->
+
 </body>
+
 </html>
