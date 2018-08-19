@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<head>
+  <title>Module 3: Topic</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link href="style.css" rel="stylesheet">
+
+  <!-- get jQuery from the google apis -->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
+
+  <!-- javascript -->
+  <script src="js/bootstrap.min.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body class="topic">
+
+
+    <div class="container-fluid">
+      <div class="navbar-brand">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3">
+              <div class="wrap">
+                <p>Video Game Release Message Board</p>
+              </div>
+            </div>
+            <div class="col-lg-4 col-xs-12 col-sm-5">
+
+              <form action="newtopic.html" method="post" class="form">
+                <button class="btn btn-primary">Start New Topic</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8">
+              <a href="#">VGRMB</a> <span class="divider"></span> <a href="index.html">Main</a>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-md-8">
+
+          <!-- 1st Topic Post -->
+          <div class="post box">
+            <div class="wrap">
+                <h2>First post topic (Posted by SC)</h2>
+                <p>1. Create a functional (working) interface. 2. Implement all agreed upon use cases. 3. Create one or multiple HTML pages. 4. Add styling with CSS. 5. Add interactivity with JavaScript. 6. Simulate interaction with the server (hard code JSON responses). 7. The interface should be minimal because you only have a week.</p>
+            </div>
+          </div>
+
+          <!-- Reply -->
+          <div class="post box">
+            <div class="wrap">
+                <div class="wrap">
+                  <p>Posted by: Adam</p>
+                </div>
+              <div class="wrap">
+                <p> Once you are done, submit the following: 1. A link to a live version of the project for the this module. 2. A link to the GitHub repository of the project for the this module. 3. Any concerns you have about the project at this</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reply -->
+          <div class="post box">
+            <div class="wrap">
+                <div class="wrap">
+                  <p>Posted by: darnita</p>
+                </div>
+              <div class="post reply wrap">
+
+                <blockquote>
+                  <span class="original">Original Posted by - Pete:</span>
+                  Once you are done, submit the following: 1. A link to a live version of the project for the this module. 2. A link to the GitHub repository of the project for the this module. 3. Any concerns you have about the project at this
+                </blockquote>
+                <p>4. Note that you should include a brief summary of your contributions under Communication and Research. Make sure none of the parts of your submission change and keep working. For example, you may want to create a separate branch in GitHub and have a different URL in your jail for each module </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUOTE -->
+          <div class="post">
+            <form action="#" class="form" method="post">
+              <div class=" box wrap">
+                <div>
+                  <div class="textwraper">
+                    <div class="postreply">Post a Reply</div>
+                    <textarea name="reply" id="reply" placeholder="Type your message here"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reply Box and button -->
+              <div class="post box wrap">
+
+                <div class="postreply">
+                  <div><button type="submit" class="btn btn-primary">Post Reply</button></div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
