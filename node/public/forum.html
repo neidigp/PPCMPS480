@@ -10,14 +10,13 @@
 
   </head>
 <body style="background-color:lightgrey;">
-  <h1>Message Board Alpha</h1>
+  <h1>Message Board</h1>
 
   <div class="topnav">
     <a href="loginpage.html">Login/Signup</a>
     <a href="site_news.html">Site News</a>
     <a href="forum.html">Forum</a>
     <a href="about.html">About</a>
-    <a href="analytics.html">Business Analytics</a>
   </div>
 
   <div class="Table">
@@ -32,7 +31,8 @@
   <input type="textarea" rows="10" cols="100" id="new_message_text"></input><br>
   Post Body<br>
   <button id="new_message_button" align="center">Submit</button><br><br>
-  <button id="deleteLP" align="center">Delete Last Post</button><br>
+  <button id="deleteLP" class="delete_button" align="center">Delete Post</button><br>
+  <input type="textarea" rows="10" cols="100" id="delPostVal"></input><br>
   <div id="postcount" align="right">Total number of posts is:</div>
 
 
@@ -65,7 +65,8 @@ $(function() {
            var pcount=0;
            for (var i = 0; i < rows.length; i++) {
              //$("#messages").append(rows[i].MessageID + " " + rows[i].Title + " " + rows[i].Text + "<br>");
-             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "<td>" + "<button class='delete' id='rows[i].MessageID' >Delete Post</button>" + "</td>" + "</tr>");
+
+             $("#Forum_Table").append("<tr>" + "<td>" + rows[i].MessageID + "</td>" + "<td>" + rows[i].Title + "</td>" + "<td>" +  rows[i].Text + "</td>" + "<td>" + "<button class='button_delete' id='" + rows[i].MessageID + "' value= '" + rows[i].MessageID + "'>Delete This Post</button>" + "</td>" + "</tr>");
              pcount++;
              $("#postcount").empty();
              $("#postcount").append("<p>Total number of posts is: </p>" + pcount);
@@ -97,16 +98,22 @@ $(function() {
 */
 
 
-    $("#delete").click(function() {
-      var id = $(this).attr("id");
+    $("#deleteLP").click(function() {
+      var id = $("#delPostVal").val();
       $("#postcount").append("<p>Id is : </p>" + id);
       $.ajax({
         type: "POST",
         url: "deleteLP",
-        data: id,
-        success: function(data){
-          // show successful delete
-          showMessages();
+        data: JSON.stringify({
+          id: id
+        }),
+        success: function(json){
+          if (!json.success){
+            alert(json.message);
+          }
+          else{
+            showMessages();
+          }
         }
       });
     });
