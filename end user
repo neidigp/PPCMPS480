@@ -1,0 +1,17 @@
+Discussion Board
+Once you’ve installed and activated Discussion Board, the plugin will automatically add three new pages to your site:
+• Topics: this page contains the [discussion_topics] shortcode which will display existing topics in a table or list
+• Log In: this page will display a log-in and registration form using the [discussion_board_login_form]shortcode
+• New Topic: this page contains the [discussion_board_form] which will display a form for users to post new topics
+You can change the titles of these pages and add further content if you wish but the pages should always contain the shortcodes to ensure the plugin functions correctly.If you don’t wish to use the plugin’s log-in form, you can delete the Log In page.
+Settings
+The plugin will also create a new menu item – Discussion Board. Here you can see a list of all topics that have been posted. You can also configure the plugin settings by clicking on Discussion Board Settings:
+General tab
+The General tab has the main settings for the plugin. This includes settings for the pages that are created when the plugin is activated, front-end messages, and options for posting new topics and for registration and log-in.
+In your dashboard, go to Discussion Board Settings.
+Pages
+New topic form page
+This is the page on your site where users can add new topics. It should contain the [discussion_board_form] which displays the New Topic form.
+Discussion topics page
+The page where your Discussion Topics are displayed.
+The [discussion_topics] shortcode should be on this page.
