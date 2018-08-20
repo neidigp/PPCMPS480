@@ -1,13 +1,291 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <title>CMPS 480</title>
+<head>
+  <meta charset="utf-8">
+  <title>Message Board</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <!-- Jquery -->
-    <script src="scripts/jquery-3.3.1.min.js" > </script>
-    <link rel="stylesheet" href="styles.css">
+  <!-- Custom CSS -->
+  <link href="style.css" rel="stylesheet">
 
-  </head>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+
+  <script src="jquery-3.3.1.min.js"></script>
+
+  <!-- Script for collapsible New Topic Button -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+  $(function() {
+    //console.log("jquery loaded!");
+
+    $("#messages").on('click', '.new_comment_button', function() {
+      console.log('heyyyy!!!22')
+    });
+
+
+    $(".new_comment_button").on('click', function() {
+      console.log('heyyyy!!!33')
+    });
+
+    $(".new_comment_button").click(function() {
+      console.log('heyyyy!!!444')
+    });
+
+
+    function showMessages() {
+      $("#messages").empty();
+      $("#messages").append("Loading data ...");
+      console.log('first loggggg')
+      $.ajax({
+        type: "GET",
+        url: "messages",
+        success: function(json) {
+          //console.log(JSON.stringify(json));
+          if (!json.success) {
+            alert(json.message);
+          }
+          else {
+            $("#messages").empty();
+            var rows = json.data;
+            for (var i = 0; i < rows.length; i++) {
+              $("#messages").append("<div class='post'><h2> " + rows[i].MessageID + "</h2>" + " <h2><a href='#'>" + rows[i].Title + "</a></h2><br>" + "<p class = " + "wrap>" +  rows[i].Text + "</p><br><button type='button' class='btn btn-info' data-toggle='collapse' data-target='#add-comment-" + rows[i].MessageID +"'>Add New Comment</button>" +
+
+
+
+
+
+              "<div id='add-comment-" + rows[i].MessageID +"' class='collapse'>" +
+                "<div class='container box'>" +
+                  "<form method='post' class='form newcomment'>" +
+                    "<div class='topwrap'>" +
+                      "<div class='posttext pull-left'>" +
+                        "<div>" +
+                          "<input type='text' name='messageId' id='new_comment_messageId' value=" + rows[i].MessageID + " />" +
+                          "<textarea name='comment' placeholder='Comment'  class='form-control'  id='new_comment_text'></textarea>" +
+                        "</div>" +
+                      "</div>" +
+                      "<div class='clearfix'></div>" +
+                    "</div>" +
+                    "<div class='postinfobot'>" +
+                      "<div class='pull-right'>" +
+                        "<div class='pull-left'><button type='button' onclick='addComment()' class='btn btn-primary new_comment_button'>Add</button></div>" +
+                        "<div class='clearfix'></div>" +
+                      "</div>" +
+                      "<div class='clearfix'></div>" +
+                    "</div>" +
+                  "</form>" +
+                "</div>" +
+              "</div>" +
+
+              "</div>");
+            }
+          }
+        },
+        error: function (textStatus, errorThrown) {
+          alert("Request failed!");
+        }
+      });
+    }
+    showMessages();
+
+    $("#new_message_button").click(function() {
+      var title = $("#new_message_title").val();
+      var text = $("#new_message_text").val();
+      $.ajax({
+        type: "POST",
+        url: "add_message",
+        data: JSON.stringify({
+          title: title,
+          text: text
+        }),
+        success: function(json) {
+          //console.log(JSON.stringify(json));
+          if (!json.success) {
+            alert(json.message);
+          }
+          else {
+            $("#new_message_title").val("");
+            $("#new_message_text").val("");
+            showMessages();
+          }
+        },
+        error: function (textStatus, errorThrown) {
+          alert("Request failed!");
+        }
+      });
+    });
+
+    function addComment() {
+      console.log('yo!!!!!!')
+    }
+    // $(".new_comment_button").click(function() {
+    //   console.log('got hereeeeeea')
+    //   var comment = $("#new_comment_text").val();
+    //   var messageId = $("#new_comment_messageId").val();
+    //   $.ajax({
+    //     type: "POST",
+    //     url: "add_comment",
+    //     data: JSON.stringify({
+    //       comment: comment,
+    //       messageId: messageId
+    //     }),
+    //     success: function(json) {
+    //         console.log('ressssssss', json);
+    //         alert(json.message);
+    //       //console.log(JSON.stringify(json));
+    //       if (!json.success) {
+    //       }
+    //       else {
+    //         console.log('errrrrrr', json);
+    //         $("#new_message_title").val("");
+    //         $("#new_message_text").val("");
+    //         showMessages();
+    //       }
+    //     },
+    //     error: function (textStatus, errorThrown) {
+    //       alert("Request failed!");
+    //     }
+    //   });
+    // });
+
+
+        $("#messages").on('click', '.new_comment_button', function() {
+          console.log('heyyyy!!!55')
+        });
+
+
+        $(".new_comment_button").on('click', function() {
+          console.log('heyyyy!!!77')
+        });
+
+        $(".new_comment_button").click(function() {
+          console.log('heyyyy!!!66')
+        });
+
+        $('.new_comment_button').addEventListener('click', function() {
+          console.log('fffffffff')
+        });
+
+  });
+  </script>
+</head>
+<body>
+
+  <div class="container-fluid">
+    <div class="navbar-brand">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
+            <div class="wrap">
+              <p>VGRMB</p>
+            </div>
+          </div>
+
+          <!-- <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
+
+          <form action="newtopic.html" method="post" class="form">
+          <button class="btn btn-primary">Start New Topic</button>
+        </form>
+      </div> -->
+    </div>
+  </div>
+</div>
+<section class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <a href="#">VGRMB</a> <span class="divider">&gt;</span> <a href="index.html">Main</a>
+      </div>
+    </div>
+  </div>
+  <!-- tOGGLE -->
+  <div class="container">
+    <h2>Video Game Release Message Board</h2>
+    <p>Click on the toggle button to add a topic</p>
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Start New Topic</button>
+    <div id="demo" class="collapse">
+
+      <!-- Start New Topic -->
+      <div class="container box">
+        <form action="#" class="form newtopic" method="post">
+          <div class="topwrap">
+            <div class="posttext pull-left">
+              <div>
+                <input type="text" placeholder="Enter Topic Title" class="form-control "  id="new_message_title" />
+              </div>
+
+              <div>
+                <textarea name="desc" placeholder="Description"  class="form-control"  id="new_message_text"></textarea>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="postinfobot">
+            <div class="pull-right postreply">
+              <div class="pull-left"><button type="submit" id="new_message_button" class="btn btn-primary">Post</button></div>
+              <div class="clearfix"></div>
+            </div>
+
+
+            <div class="clearfix"></div>
+          </div>
+        </form>
+      </div><!-- Start New Topic -->
+    </div>
+
+    <div id="add-comment" class="collapse">
+      <div class="container box">
+        <form action="#" class="form newcomment" method="post">
+          <div class="topwrap">
+            <div class="posttext pull-left">
+              <div>
+                <textarea name="comment" placeholder="Comment"  class="form-control"  id="new_comment_text"></textarea>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="postinfobot">
+            <div class="pull-right">
+              <div class="pull-left"><button type="submit" id="new_comment_button" class="btn btn-primary new_comment_button">Add</button></div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-8">
+
+        <!-- 1st POST -->
+        <div id="messages">
+        </div>
+      </div>
+      <!--1st post -->
+    </section>
+  </div>
+</div>
+</div>
+
+
+<!-- <div>
+This is the homepage for the Message Board!<br><br>
+Title: <input type="text" id="new_message_title"></input><br>
+Text: <input type="text" id="new_message_text"></input><br>
+<button id="new_message_button">Submit</button><br><br>
+</div> -->
+
 </body>
 
 </html>
