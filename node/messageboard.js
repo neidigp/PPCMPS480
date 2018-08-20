@@ -7,13 +7,14 @@ var qs = require("querystring");
 http.createServer(function(req, res) {
   try {
     var path = req.url.replace(/\/?(?:\?.*)?$/, "").toLowerCase();
+    console.log(path);
     if (path === "/messages") {
       messages(req, res);
     }
     else if (path === "/add_message") {
       addMessage(req, res);
     }
-    else if (path === "/deleteLP") {
+    else if (path === "/deletelp") {
       deletePost(req, res);
     }
     else {
@@ -146,18 +147,44 @@ function addMessage(req, res) {
 
 //deletes the last post made
 function deletePost(req, res) {
-  req.on("end", function () {
-  var conn = mysql.createConnection(credentials.connection);
-  conn.connect(function(err){
-  if(err) throw err;
-  var sql = "DELETE FROM MESSAGE ORDER BY MessageID DESC LIMIT 1";
-  conn.query(sql, function(err, result){
-    if(err) throw err;
-    console.log("records deleted.");
+  var body = "";
+  req.on("data", function (data) {
+    body += data;
+    // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+    if (body.length > 1e6) {
+      // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
+      req.connection.destroy();
+    }
   });
-  conn.end();
-});
-});
+  req.on("end", function () {
+    var injson = JSON.parse(body);
+    var conn = mysql.createConnection(credentials.connection);
+    // connect to database
+    conn.connect(function(err) {
+      if (err) {
+        console.error("ERROR: cannot connect: " + e);
+        return;
+      }
+      // query the database
+      conn.query("DELETE FROM MESSAGE WHERE MessageID=?", [injson.id], function(err, rows, fields) {
+        // build json result object
+        var outjson = {};
+        if (err) {
+          // query failed
+          outjson.success = false;
+          outjson.message = "Query failed: " + err;
+        }
+        else {
+          // query successful
+          outjson.success = true;
+          outjson.message = "Query successful!";
+        }
+        // return json object that contains the result of the query
+        sendResponse(req, res, outjson);
+      });
+      conn.end();
+    });
+  });
 }
 
 

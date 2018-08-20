@@ -32,6 +32,7 @@
   Post Body<br>
   <button id="new_message_button" align="center">Submit</button><br><br>
   <button id="deleteLP" class="delete_button" align="center">Delete Post</button><br>
+  Post number to be deleted:
   <input type="textarea" rows="10" cols="100" id="delPostVal"></input><br>
   <div id="postcount" align="right">Total number of posts is:</div>
 
@@ -97,25 +98,30 @@ $(function() {
         });
 */
 
-
+    // Deletes post that matches the input id entered
     $("#deleteLP").click(function() {
       var id = $("#delPostVal").val();
       $("#postcount").append("<p>Id is : </p>" + id);
-      $.ajax({
-        type: "POST",
-        url: "deleteLP",
-        data: JSON.stringify({
-          id: id
-        }),
-        success: function(json){
-          if (!json.success){
-            alert(json.message);
+      if (id) {
+        $.ajax({
+          type: "POST",
+          url: "deletelp",
+          data: JSON.stringify({
+            id: id
+          }),
+          success: function(json){
+            if (!json.success){
+              alert(json.message);
+            }
+            else{
+              showMessages();
+            }
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            alert(JSON.stringify(jqXHR) + " " + textStatus + " " + errorThrown);
           }
-          else{
-            showMessages();
-          }
-        }
-      });
+        });
+      }
     });
 
 
